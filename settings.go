@@ -90,10 +90,10 @@ func LoadSettings(filename string) (*Settings, error) {
 		return s, fmt.Errorf("value for MaxMessageCount must be greater than 0, given %d", s.MaxMessageCount)
 	}
 
-	s.AdminPassword, err = generatePass(time.Now().Unix())
-	if err != nil {
-		return nil, fmt.Errorf("unable to generate admin password: %s", err)
-	}
+	//s.AdminPassword, err = generatePass(time.Now().Unix())
+	//if err != nil {
+	//return nil, fmt.Errorf("unable to generate admin password: %s", err)
+	//}
 
 	if s.RateLimitChat == -1 {
 		s.RateLimitChat = 0
@@ -166,9 +166,9 @@ func LoadSettings(filename string) (*Settings, error) {
 	}
 
 	// Save admin password to file
-	if err = s.Save(); err != nil {
-		return nil, fmt.Errorf("Unable to save settings: %s", err)
-	}
+	//if err = s.Save(); err != nil {
+	//return nil, fmt.Errorf("Unable to save settings: %s", err)
+	//}
 
 	return s, nil
 }

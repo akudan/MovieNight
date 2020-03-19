@@ -221,20 +221,9 @@ input[type=text] {
     min-width: 300px;
 }
 
-#hidden {
-    display: none;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    margin: 0px 5px;
-    padding: 3px;
-    background: var(--var-popout-color);
-}
-
-#hidden:hover,
-#optionBox:hover~#hidden {
-    display: unset;
+#topButtons {
+	margin-left: auto;
+	margin-right: auto;
 }
 
 #optionBox,
@@ -259,6 +248,7 @@ input[type=text] {
 
 
 #playing {
+	display: none;
     color: #288a85;
     font-size: x-Large;
 }
