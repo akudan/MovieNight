@@ -7,9 +7,9 @@ function initPlayer() {
         var flvPlayer = flvjs.createPlayer({
             type: "flv",
             url: "/live",
-            isLive: true,
+            isLive: false,
         }, {
-            enableStashBuffer: false,
+            enableStashBuffer: true,
         });
         flvPlayer.attachMediaElement(videoElement);
         flvPlayer.load();
