@@ -1,0 +1,91 @@
+user www-data;
+worker_processes auto;
+pid /run/nginx.pid;
+include /etc/nginx/modules-enabled/*.conf;
+
+events {
+	worker_connections 768;
+	multi_accept on;
+    #epoll on;
+}
+
+http {
+
+	##
+	# Basic Settings
+	##
+
+	sendfile on;
+	tcp_nopush on;
+	tcp_nodelay on;
+	keepalive_timeout 65;
+	types_hash_max_size 2048;
+	# server_tokens off;
+
+	# server_names_hash_bucket_size 64;
+	# server_name_in_redirect off;
+
+	include /etc/nginx/mime.types;
+	default_type application/octet-stream;
+
+	##
+	# SSL Settings
+	##
+
+	ssl_protocols TLSv1 TLSv1.1 TLSv1.2; # Dropping SSLv3, ref: POODLE
+	ssl_prefer_server_ciphers on;
+
+	##
+	# Logging Settings
+	##
+
+	access_log /var/log/nginx/access.log;
+	error_log /var/log/nginx/error.log;
+
+	##
+	# Gzip Settings
+	##
+
+	gzip on;
+
+	# gzip_vary on;
+	# gzip_proxied any;
+	# gzip_comp_level 6;
+	# gzip_buffers 16 8k;
+	# gzip_http_version 1.1;
+	# gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+
+	##
+	# Virtual Host Configs
+	##
+
+	include /etc/nginx/conf.d/*.conf;
+	include /etc/nginx/sites-enabled/*;
+
+}
+
+# RTMP configuration
+rtmp {
+    server {
+        listen 1936; # Listen on standard RTMP port
+        chunk_size 4000; 
+        
+        # This application is to accept incoming stream
+        application live {
+            live on; # Allows live input
+            
+            # Once receive stream, transcode for adaptive streaming
+            # This single ffmpeg command takes the input and transforms
+            # the source into 4 different streams with different bitrate
+            # and quality. P.S. The scaling done here respects the aspect
+            # ratio of the input.
+            exec ffmpeg -i rtmp://localhost:1936/$app/$name -async 1 -vsync -1
+                        -c:v libx264 -c:a aac -b:v 256k -b:a 64k -vf "scale=480:trunc(ow/a/2)*2" -tune zerolatency -preset veryfast -crf 23 -f flv rtmp://localhost/$name_low/STREAM_KEY
+                        -c:v libx264 -c:a aac -b:v 1024k -b:a 128k -vf "scale=960:trunc(ow/a/2)*2" -tune zerolatency -preset veryfast -crf 23 -f flv rtmp://localhost/$name_high/STREAM_KEY
+                        -c:v libx264 -c:a copy -b:v 1920k -vf "scale=1280:trunc(ow/a/2)*2" -tune zerolatency -preset veryfast -crf 23 -f flv rtmp://localhost/$name_hd720/STREAM_KEY
+                        -c copy -f flv rtmp://localhost/$name_src/STREAM_KEY;
+        }
+    }
+}
+
+

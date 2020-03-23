@@ -60,3 +60,6 @@ Usage of .\MovieNight.exe:
   -l string
         host:port of the MovieNight (default ":8089")
 ```
+
+## nginx config
+See nginx.conf.example -- Hosts a simple rtmp server that accepts a single stream, and then passes it to ffmpeg to re-encode it to 3 lower quality streams which are sent to MovieNight along with forwarding the original source stream 
