@@ -6,7 +6,7 @@
     <h2>Commands</h2>
     <dl>
         {{range $k, $v := .Commands}}
-        <dt>{{$k}}</dt>
+        <dt>/{{$k}}</dt>
         <dd>{{$v}}</dd>
         {{end}}
     </dl>
@@ -14,7 +14,7 @@
     <h2>Moderator</h2>
     <dl>
         {{range $k, $v := .ModCommands}}
-        <dt>{{$k}}</dt>
+        <dt>/{{$k}}</dt>
         <dd>{{$v}}</dd>
         {{end}}
     </dl>
@@ -23,7 +23,7 @@
     <h2>Administrator</h2>
     <dl>
         {{range $k, $v := .AdminCommands}}
-        <dt>{{$k}}</dt>
+        <dt>/{{$k}}</dt>
         <dd>{{$v}}</dd>
         {{end}}
     </dl>
