@@ -52,7 +52,12 @@
         <div id="topButtons">
             <div id="chatButtons">
                 {{if .Video}}
-                <input type="button" class="button pretty-button" onclick="initPlayer();" value="Reload Player" />
+                <!--input type="button" class="button pretty-button" onclick="initPlayer('low');" value="low" /-->
+                <!--input type="button" class="button pretty-button" onclick="initPlayer('mid');" value="mid" /-->
+                <input type="button" class="button pretty-button" onclick="initPlayer('low');" value="low" />
+                <input type="button" class="button pretty-button" onclick="initPlayer('high');" value="med" />
+                <input type="button" class="button pretty-button" onclick="initPlayer('hd720');" value="hi" />
+                <input type="button" class="button pretty-button" onclick="initPlayer('src');" value="HD" />
                 {{end}}
                 <input type="button" class="button pretty-button" onclick="help();" value="Help" />
             </div>

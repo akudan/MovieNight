@@ -1,12 +1,16 @@
 /// <reference path="./both.js" />
 
+var flvPlayer;
 
-function initPlayer() {
+function initPlayer(qual) {
     if (flvjs.isSupported()) {
         var videoElement = document.getElementById("videoElement");
-        var flvPlayer = flvjs.createPlayer({
+        if(flvPlayer) {
+            flvPlayer.destroy();
+        }
+        flvPlayer = flvjs.createPlayer({
             type: "flv",
-            url: "/live",
+            url: "/show_"+qual,
             isLive: false,
         }, {
             enableStashBuffer: true,
@@ -17,4 +21,4 @@ function initPlayer() {
     }
 }
 
-window.addEventListener("load", initPlayer);
+//window.addEventListener("load", function() { initPlayer("src"); });
